@@ -1,5 +1,9 @@
 # Steam Profile Designer (WIP)
 
+<p align="center">
+  <img src="./public/app_screenshot.png" alt="Early app screenshot" width="400"/>
+</p>
+
 Steam profile Designer is a **unoffical** tool designed to help Steam users design their Steam profiles.
 
 **It is my pet project which is still work in progress**
