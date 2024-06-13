@@ -1,0 +1,9 @@
+.Catalogue {
+  width: 100%;
+  padding: 12px;
+  overflow: scroll;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 16px;
+}
