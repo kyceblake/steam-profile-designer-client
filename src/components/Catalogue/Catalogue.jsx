@@ -2,15 +2,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchItems, selectItems } from "../../redux/slices/itemsSlice";
 import { getActiveCategory } from "../../redux/slices/categorySlice";
+
 import Card from "../Card/Card";
+import styled from "styled-components";
 
-import s from "./Catalogue.module.css";
-
-function List({ items }) {
-  return items.map((item) => {
-    return <Card key={item.appid + item.defid} item={item} />;
-  });
-}
+const Wrapper = styled.div`
+  width: 100%;
+  padding: 12px;
+  overflow: scroll;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 16px;
+`;
 
 export default function Catalogue() {
   const searchValue = useSelector((state) => state.search.value);
@@ -28,6 +32,12 @@ export default function Catalogue() {
     );
   }, [searchValue, categoryId]);
 
+  const mapItems = () => {
+    return items.map((item) => {
+      return <Card key={item.appid + item.defid} item={item} />;
+    });
+  };
+
   const getData = () => {
     switch (status) {
       case "loading":
@@ -35,9 +45,9 @@ export default function Catalogue() {
       case "error":
         return <h1>ERROR</h1>;
       default:
-        return totalPages == 0 ? <h1>EMPTY </h1> : <List items={items} />;
+        return totalPages == 0 ? <h1>EMPTY </h1> : mapItems();
     }
   };
 
-  return <div className={s.Catalogue}>{getData()}</div>;
+  return <Wrapper>{getData()}</Wrapper>;
 }

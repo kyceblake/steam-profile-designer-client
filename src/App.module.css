@@ -34,7 +34,7 @@ ul {
   SCROLL BAR
 */
 ::-webkit-scrollbar {
-  height: 12px;
+  height: 0px;
   width: 14px;
   background: transparent;
   z-index: 12;
