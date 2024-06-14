@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+// FIXME: i don't like how many there if else statemenets,
+// are there any ways to make it more readable?
+// Looks like even wiki uses that way
+// https://styled-components.com/docs/basics#adapting-based-on-props
 const ButtonWrapper = styled.div`
   display: flex;
   gap: 6px;
@@ -7,16 +11,15 @@ const ButtonWrapper = styled.div`
   align-items: center;
   padding: 6px 8px;
   cursor: pointer;
-  outline: 1px solid #78a9e2;
+  outline: 1px solid ${(props) => props.primary || "#78a9e2"};
   border-radius: 5px;
-  color: #78a9e2;
-
+  color: ${(props) => props.primary || "#78a9e2"};
   background-image: linear-gradient(
     to left,
     transparent,
     transparent 50%,
-    rgba(120, 169, 226, 0.8) 50%,
-    rgba(120, 169, 226, 0.8)
+    ${(props) => props.primary || "#78a9e2"} 50%,
+    ${(props) => props.primary || "#78a9e2"}
   );
   background-position: 100% 0;
   background-size: 200% 100%;
@@ -30,7 +33,7 @@ const ButtonWrapper = styled.div`
 
   && svg {
     fill: none;
-    fill: #78a9e2;
+    fill: ${(props) => props.primary || "#78a9e2"};
 
     transform: rotate(0deg);
     transition: transform 0.3s cubic-bezier(0.42, 0, 0.03, 1.25);
@@ -42,9 +45,9 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-export default function Button({ title, icon }) {
+export default function Button({ title, icon, color }) {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper primary={color}>
       {icon} {title}
     </ButtonWrapper>
   );

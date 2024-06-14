@@ -53,7 +53,7 @@ export default function Sidebar() {
         ))}
       </ul>
       <Bottom>
-        <Button title="Reset items" icon={<BiRevision />} />
+        <Button title="Reset items" icon={<BiRevision />} color="#BF4F74" />
         <Button title="Apply items" icon={<BiSolidInjection />} />
       </Bottom>
     </Wrapper>
