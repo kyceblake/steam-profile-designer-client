@@ -3,8 +3,32 @@ import { useDispatch } from "react-redux";
 import { setValue } from "../../redux/slices/searchSlice";
 
 import { IoIosSearch } from "react-icons/io";
+import styled from "styled-components";
 
-export default function SearchInput({ debounceDelay, className }) {
+const Wrapper = styled.div`
+  position: relative;
+
+  && svg {
+    position: absolute;
+    left: 5px;
+    top: 6px;
+  }
+
+  && input {
+    background: #393d43;
+    border-radius: 5px;
+    border: 0;
+    outline: none;
+    height: 28px;
+    width: 300px;
+    color: #c5cbd8;
+    padding-left: 28px;
+    box-sizing: border-box;
+    font-style: italic;
+  }
+`;
+
+export default function SearchInput({ debounceDelay }) {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
 
@@ -17,7 +41,7 @@ export default function SearchInput({ debounceDelay, className }) {
   }, [inputValue, debounceDelay]);
 
   return (
-    <div className={className}>
+    <Wrapper>
       <input
         type="text"
         placeholder="Search for items..."
@@ -26,6 +50,6 @@ export default function SearchInput({ debounceDelay, className }) {
         onChange={(e) => setInputValue(e.target.value)}
       />
       <IoIosSearch />
-    </div>
+    </Wrapper>
   );
 }

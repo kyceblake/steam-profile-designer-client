@@ -9,10 +9,10 @@ Steam profile Designer is a **unoffical** tool designed to help Steam users desi
 **It is my pet project which is still work in progress**
 
 It also requires external API server because STEAM API doesn't have CORS policy set up.
-Server code is avaliable here [steam-profile-designer-server](https://github.com/kyceblake/steam-profile-designer-server
+Server code is avaliable here [steam-profile-designer-server](https://github.com/kyceblake/steam-profile-designer-server)
 **Server may be down, however I planning to write the cache logic. You can host server by yourself and change api url in the settings of chrome extension**
 
-# ToDo
+## ToDo
 
 - An "Infinite" list of items with virtualization
 - A Settings page with an option to change API server
@@ -26,6 +26,6 @@ Server code is avaliable here [steam-profile-designer-server](https://github.com
   - icons
   - additional stats
 
-# Credits
+## Credits
 
 Server uses some code from [sapic/backgroundsgallery getAllBackgrounds.ts](https://github.com/sapic/backgroundsgallery/blob/master/utils/backgrounds/getAllBackgrounds.ts)

@@ -1,14 +1,21 @@
+import styled from "styled-components";
 import BtnSidebarToggle from "../../components/BtnSidebarToggle/BtnSidebarToggle";
 import Catalogue from "../../components/Catalogue/Catalogue";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import s from "./HomePage.module.css";
+
+const Wrapper = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+`;
 
 export default function HomePage() {
   return (
-    <div className={s.HomePage}>
+    <Wrapper>
       <Sidebar />
       <BtnSidebarToggle />
       <Catalogue />
-    </div>
+    </Wrapper>
   );
 }
