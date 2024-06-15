@@ -3,6 +3,7 @@ import searchReducer from "./slices/searchSlice";
 import itemsReducer from "./slices/itemsSlice";
 import categoriesReducer from "./slices/categorySlice";
 import sidebarReducer from "./slices/sidebarSlice";
+import selectedItemsReducer from "./slices/selectedItemsSlice";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     items: itemsReducer,
     categories: categoriesReducer,
     sidebar: sidebarReducer,
+    selectedItems: selectedItemsReducer,
   },
 });

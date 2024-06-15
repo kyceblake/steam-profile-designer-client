@@ -1,31 +1,3 @@
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-basis: 70%;
-  justify-content: center;
-  align-items: center;
-
-  background: linear-gradient(
-    144.37deg,
-    rgba(130, 156, 219, 0) 68.22%,
-    rgba(82, 125, 235, 0.32) 113.95%
-  );
-
-  img,
-  video {
-    max-width: 70%;
-    height: auto;
-    border-radius: 3px;
-
-    transition-duration: 0.4s;
-    transition-timing-function: cubic-bezier(0, 0.73, 0.48, 1);
-    transition-property: transform;
-    transform-origin: 50% 50%;
-    transition-property: transform, filter;
-  }
-`;
-
 export default function Media({ appid, type, meta }) {
   let url =
     "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items"; // appid/meta.CONTENT
@@ -58,5 +30,5 @@ export default function Media({ appid, type, meta }) {
     }
   };
 
-  return <Wrapper>{showByType()}</Wrapper>;
+  return <>{showByType()}</>;
 }

@@ -5,6 +5,7 @@ import { BiRevision, BiSolidInjection } from "react-icons/bi";
 import styled from "styled-components";
 import Button from "./Button";
 import Entry from "./Entry";
+import ActiveItems from "./ActiveItems";
 
 const Wrapper = styled.div`
   z-index: 1;
@@ -34,6 +35,12 @@ const Bottom = styled.div`
   display: flex;
   flex-flow: column;
   gap: 8px;
+
+  && .buttons {
+    display: flex;
+    flex-flow: column;
+    gap: 8px;
+  }
 `;
 
 export default function Sidebar() {
@@ -53,8 +60,11 @@ export default function Sidebar() {
         ))}
       </ul>
       <Bottom>
-        <Button title="Reset items" icon={<BiRevision />} color="#BF4F74" />
-        <Button title="Apply items" icon={<BiSolidInjection />} />
+        <ActiveItems />
+        <div className="buttons">
+          <Button title="Reset items" icon={<BiRevision />} color="#BF4F74" />
+          <Button title="Apply items" icon={<BiSolidInjection />} />
+        </div>
       </Bottom>
     </Wrapper>
   );

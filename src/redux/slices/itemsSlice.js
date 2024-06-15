@@ -22,7 +22,7 @@ export const itemsSlice = createSlice({
     });
 
     builder.addCase(fetchItems.fulfilled, (state, action) => {
-      // TODO: i hate that code
+      // TODO: i hate that code'
       const diffCategory = action.meta.arg.category != state.category;
       const diffSearch = action.meta.arg.searchQuery != state.searchQuery;
 
@@ -60,7 +60,6 @@ export const fetchItems = createAsyncThunk(
       },
     });
 
-    console.log(JSON.parse(data));
     return JSON.parse(data);
   }
 );

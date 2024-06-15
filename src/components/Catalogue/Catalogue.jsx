@@ -21,6 +21,14 @@ const Wrapper = styled.div`
   }
 `;
 
+function Loading({ text }) {
+  return (
+    <p style={{ textAlign: "center", flexBasis: "100%" }}>
+      <b>{text}</b>
+    </p>
+  );
+}
+
 export default function Catalogue() {
   const searchValue = useSelector((state) => state.search.value);
   const categoryId = useSelector(getActiveCategory);
@@ -57,25 +65,15 @@ export default function Catalogue() {
   return (
     <Wrapper id="scrollableDiv">
       {status == "error" ? (
-        <p style={{ textAlign: "center", flexBasis: "100%" }}>
-          <b>API is down</b>
-        </p>
+        <Loading text="API server is down" />
       ) : (
         <InfiniteScroll
           dataLength={items?.length ? items.length : 0}
           next={fetchMoreData}
           hasMore={hasMore()}
-          loader={
-            <p style={{ textAlign: "center", flexBasis: "100%" }}>
-              <b>LOADING</b>
-            </p>
-          }
+          loader={<Loading text="Loading" />}
           scrollableTarget="scrollableDiv"
-          endMessage={
-            <p style={{ textAlign: "center", flexBasis: "100%" }}>
-              <b>That's all...</b>
-            </p>
-          }
+          endMessage={<Loading text="That's all..." />}
         >
           {items?.map((i, index, arr) => {
             return <Card key={i.appid + i.defid} item={i} />;

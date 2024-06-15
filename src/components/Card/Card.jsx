@@ -1,7 +1,13 @@
 import React from "react";
 import SteamCoin from "../../assets/SteamCoin";
 import Media from "./Media";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { useDispatch } from "react-redux";
+import {
+  getSelectedItems,
+  setValue,
+} from "../../redux/slices/selectedItemsSlice";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled.div`
   position: relative;
@@ -17,7 +23,19 @@ const Wrapper = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-  background: rgba(76, 112, 168, 0.25);
+
+  ${(props) =>
+    props.$selected
+      ? css`
+          background: linear-gradient(
+            180deg,
+            rgba(6, 191, 255, 1) 0%,
+            rgba(43, 116, 255, 1) 100%
+          );
+        `
+      : css`
+          background: rgba(76, 112, 168, 0.25);
+        `}
 
   /* artifacts on mozilla */
   backdrop-filter: blur(20px) saturate(180%) brightness(60%);
@@ -34,6 +52,32 @@ const Wrapper = styled.div`
   &&:hover img,
   &&:hover video {
     transform: scale(1.3);
+  }
+`;
+
+const MediaWrapper = styled.div`
+  display: flex;
+  flex-basis: 70%;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+    144.37deg,
+    rgba(130, 156, 219, 0) 68.22%,
+    rgba(82, 125, 235, 0.32) 113.95%
+  );
+
+  img,
+  video {
+    max-width: 70%;
+    height: auto;
+    border-radius: 3px;
+
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0, 0.73, 0.48, 1);
+    transition-property: transform;
+    transform-origin: 50% 50%;
+    transition-property: transform, filter;
   }
 `;
 
@@ -87,7 +131,11 @@ const Price = styled(Text)`
 `;
 
 export default function Card({ item }) {
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(getSelectedItems);
   const { active, community_item_data, point_cost, appid } = item;
+
+  if (!active) return; // some items may be unavailable to buy
 
   const { item_title } = community_item_data;
   const item_price = new Intl.NumberFormat().format(point_cost);
@@ -101,15 +149,32 @@ export default function Card({ item }) {
     8: "Profile Theme",
   };
 
-  if (!active) return; // some items may be unavailable to buy
+  const setActive = () => {
+    if (isSelected) {
+      dispatch(setValue(item));
+    }
+    dispatch(setValue(item));
+  };
+
+  let isSelected = () => {
+    for (const [key, value] of Object.entries(selectedItems)) {
+      if (value?.appid == item.appid && value?.defid == item.defid) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   return (
-    <Wrapper>
-      <Media
-        appid={appid}
-        type={item.community_item_class}
-        meta={community_item_data}
-      />
+    <Wrapper $selected={isSelected()} onClick={() => setActive()}>
+      <MediaWrapper>
+        <Media
+          appid={appid}
+          type={item.community_item_class}
+          meta={community_item_data}
+        />
+      </MediaWrapper>
+
       <Metadata>
         <Title>{item_title}</Title>
         <Category>{categories[item.community_item_class]}</Category>
