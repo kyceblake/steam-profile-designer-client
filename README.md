@@ -14,10 +14,11 @@ Server code is avaliable here [steam-profile-designer-server](https://github.com
 
 ## ToDo
 
-- An "Infinite" list of items with virtualization
+- ~~An "Infinite" list of items with virtualization~~
+- List virtualization
 - A Settings page with an option to change API server
 - A Selected Items component
-- Caching feature
+- Clear cache feature
 - Profile Themes color parser
 - Manipulate steam profile DOM via browser extensions
 - Write script for building browser extension

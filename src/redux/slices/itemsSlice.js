@@ -6,10 +6,11 @@ const fetchURL = import.meta.env.VITE_ITEMS_FETCH_URL;
 const initialState = {
   items: [],
   totalPages: 0,
-  currentPage: 0,
+  currentPage: -1,
   searchQuery: "",
-  type: "",
+  category: 0,
   status: "loading",
+  hasMore: true,
 };
 
 export const itemsSlice = createSlice({
@@ -21,11 +22,21 @@ export const itemsSlice = createSlice({
     });
 
     builder.addCase(fetchItems.fulfilled, (state, action) => {
+      // TODO: i hate that code
+      const diffCategory = action.meta.arg.category != state.category;
+      const diffSearch = action.meta.arg.searchQuery != state.searchQuery;
+
       return {
         ...state,
-        ...action.meta.arg,
-        items: action.payload.page,
+        items:
+          diffCategory || diffSearch
+            ? action.payload.page
+            : state.items.concat(action.payload.page),
         totalPages: action.payload.total,
+        currentPage: action.payload.current,
+        searchQuery: action.meta.arg.searchQuery,
+        category: action.meta.arg.category,
+        hasMore: action.payload.total !== action.payload.current,
         status: "success",
       };
     });
@@ -49,6 +60,7 @@ export const fetchItems = createAsyncThunk(
       },
     });
 
+    console.log(JSON.parse(data));
     return JSON.parse(data);
   }
 );
