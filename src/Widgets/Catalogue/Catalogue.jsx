@@ -1,6 +1,15 @@
 import { FixedSizeGrid as Grid } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
+import { useEffect } from "react";
+
+// TODO:
+// const items = [
+//   [1, 2, 3, 4],
+//   [5, 6, 7, 8],
+//   [9, 10, 11, 12],
+// ];
+// const isItemLoaded = (x,y) => items[x][y];
 
 const LOADING = 1;
 const LOADED = 2;
@@ -22,7 +31,10 @@ const loadMoreItems = (startIndex, stopIndex) => {
   );
 };
 
-function Cell({ columnIndex, rowIndex, style }) {
+function Cell({ columnIndex, rowIndex, style, ...etc }) {
+  useEffect(() => {
+    console.log(etc.data[0]);
+  }, []);
   let label;
   const itemIndex = rowIndex * NUM_COLUMNS + columnIndex;
   if (itemStatusMap[itemIndex] === LOADED) {
@@ -68,6 +80,7 @@ export default function Catalogue() {
                   });
                 }}
                 ref={ref}
+                itemData={itemStatusMap}
               >
                 {Cell}
               </Grid>
