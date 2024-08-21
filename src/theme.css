@@ -2,11 +2,16 @@
   position: relative;
   height: 100%;
   width: 100%;
+  background-color: #1b2838;
+  display: flex;
+  flex-flow: column;
+}
 
+.Outlet {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-flow: row;
-
-  background-color: #1b2838;
 }
 
 ::-webkit-scrollbar {

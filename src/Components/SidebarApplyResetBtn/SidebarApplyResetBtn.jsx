@@ -4,6 +4,7 @@ const Wrapper = styled.div`
   display: flex;
   gap: 6px;
   font-size: 1.2rem;
+  user-select: none;
   align-items: center;
   padding: 6px 8px;
   min-width: fit-content;
