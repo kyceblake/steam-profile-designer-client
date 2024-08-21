@@ -16,7 +16,7 @@ const Button = styled.div`
   }
 
   &&.active {
-    transform: translateX(1041%);
+    transform: translateX(1040%);
   }
 `;
 

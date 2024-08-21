@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SparklesIcon from "../../Assets/SparklesIcon";
-import SearchInput from "../../Components/SearchInput/SearchInput";
+import SearchInput from "../../Components/HeaderSearchInput/HeaderSearchInput";
 import { Title, Wrapper } from "./styles";
 import { useEffect } from "react";
 
@@ -10,7 +10,6 @@ function Header() {
   useEffect(() => {
     const debouncer = setTimeout(() => {
       setSearchValue(searchValue);
-      console.log(searchValue);
     }, 500);
     return () => clearTimeout(debouncer);
   }, [searchValue]);

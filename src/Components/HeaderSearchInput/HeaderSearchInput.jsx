@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   }
 `;
 
-function SearchInput({ inputValue, setInputValue }) {
+function HeaderSearchInput({ inputValue, setInputValue }) {
   return (
     <Wrapper>
       <input
@@ -39,4 +39,4 @@ function SearchInput({ inputValue, setInputValue }) {
   );
 }
 
-export default SearchInput;
+export default HeaderSearchInput;

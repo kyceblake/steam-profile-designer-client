@@ -1,3 +1,4 @@
+import Catalogue from "./Widgets/Catalogue/Catalogue";
 import Header from "./Widgets/Header/Header";
 import Sidebar from "./Widgets/Sidebar/Sidebar";
 import "./theme.css";
@@ -8,7 +9,7 @@ function App() {
       <Header />
       <div className="Outlet">
         <Sidebar />
-        <h1>test</h1>
+        <Catalogue />
       </div>
     </>
   );
