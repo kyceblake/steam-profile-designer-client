@@ -1,43 +1,30 @@
 import { FixedSizeGrid as Grid } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { useEffect } from "react";
 
-// TODO:
-// const items = [
-//   [1, 2, 3, 4],
-//   [5, 6, 7, 8],
-//   [9, 10, 11, 12],
-// ];
-// const isItemLoaded = (x,y) => items[x][y];
-
-const LOADING = 1;
-const LOADED = 2;
 let itemStatusMap = {};
 const NUM_COLUMNS = 4;
 
 const isItemLoaded = (index) => !!itemStatusMap[index];
 const loadMoreItems = (startIndex, stopIndex) => {
   for (let index = startIndex; index <= stopIndex; index++) {
-    itemStatusMap[index] = LOADING;
+    itemStatusMap[index] = 0;
   }
   return new Promise((resolve) =>
     setTimeout(() => {
       for (let index = startIndex; index <= stopIndex; index++) {
-        itemStatusMap[index] = LOADED;
+        itemStatusMap[index] = 1;
       }
       resolve();
     }, 2500)
   );
 };
 
-function Cell({ columnIndex, rowIndex, style, ...etc }) {
-  useEffect(() => {
-    console.log(etc.data[0]);
-  }, []);
+function Cell({ columnIndex, rowIndex, style }) {
   let label;
+  console.log(` ${rowIndex} ${columnIndex} `);
   const itemIndex = rowIndex * NUM_COLUMNS + columnIndex;
-  if (itemStatusMap[itemIndex] === LOADED) {
+  if (itemStatusMap[itemIndex] === 1) {
     label = `Cell (${rowIndex}, ${columnIndex})`;
   } else {
     label = "Loading...";
@@ -49,7 +36,7 @@ function Cell({ columnIndex, rowIndex, style, ...etc }) {
   );
 }
 
-export default function Catalogue() {
+export default function Catalogue({}) {
   return (
     <div style={{ flex: "1 1 auto" }}>
       <AutoSizer>
@@ -80,7 +67,6 @@ export default function Catalogue() {
                   });
                 }}
                 ref={ref}
-                itemData={itemStatusMap}
               >
                 {Cell}
               </Grid>
