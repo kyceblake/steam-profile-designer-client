@@ -1,8 +1,17 @@
-# React + Vite
+# Steam Profile Designer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Steam Profile Designer is **unoffical** browser extension designed to help Steam users design their Steam profiels
 
-Currently, two official plugins are available:
+** This project is still work in progress **
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project requires [steam-profile-designer-server](https://github.com/kyceblake/steam-profile-designer-server) to be able to fetch items from Steam however extension uses my hosted version by default. You can change that to your own hosted version in extension settings.
+
+## ToDo
+
+- List virtualization
+- ~Search and Categories events~ (done, will be in the next commit)
+- Settings page with an option to change API server
+- Selected Items component
+- Manipulate steam profile DOM via browser extensions
+- Profile themes color parser
+- Minor UI/UX tweaks

@@ -1,79 +1,59 @@
-import { FixedSizeGrid as Grid } from "react-window";
-import InfiniteLoader from "react-window-infinite-loader";
-import AutoSizer from "react-virtualized-auto-sizer";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
-let itemStatusMap = {};
-const NUM_COLUMNS = 4;
+import { useSelector, useDispatch } from "react-redux";
+import { fetchItems, selectItems } from "../../Redux/Slices/itemsSlice";
 
-const isItemLoaded = (index) => !!itemStatusMap[index];
-const loadMoreItems = (startIndex, stopIndex) => {
-  for (let index = startIndex; index <= stopIndex; index++) {
-    itemStatusMap[index] = 0;
-  }
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      for (let index = startIndex; index <= stopIndex; index++) {
-        itemStatusMap[index] = 1;
-      }
-      resolve();
-    }, 2500)
-  );
-};
+import Card from "../../Components/Card/Card";
+import { Loading, Wrapper } from "./style";
 
-function Cell({ columnIndex, rowIndex, style }) {
-  let label;
-  console.log(` ${rowIndex} ${columnIndex} `);
-  const itemIndex = rowIndex * NUM_COLUMNS + columnIndex;
-  if (itemStatusMap[itemIndex] === 1) {
-    label = `Cell (${rowIndex}, ${columnIndex})`;
-  } else {
-    label = "Loading...";
-  }
+const Loader = () => <Loading>⏳ Loading...</Loading>;
+
+export default function Catalogue() {
+  const { ref, inView } = useInView();
+  const dispatch = useDispatch();
+  const data = useSelector(selectItems);
+
+  const loadMoreItems = async (page) => {
+    if (data.hasMore) {
+      dispatch(
+        fetchItems({
+          page: page,
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    loadMoreItems(data.page);
+  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      loadMoreItems(data.page + 1);
+    }
+  }, [inView]);
+
   return (
-    <div className="ListItem" style={style}>
-      {label}
-    </div>
-  );
-}
+    <Wrapper>
+      {data.items.map((i, index) => {
+        const src = i.urls.small || i.urls.big; // sometimes only one exists (games fault)
 
-export default function Catalogue({}) {
-  return (
-    <div style={{ flex: "1 1 auto" }}>
-      <AutoSizer>
-        {({ height, width }) => (
-          <InfiniteLoader
-            isItemLoaded={isItemLoaded}
-            itemCount={1000}
-            loadMoreItems={loadMoreItems}
-          >
-            {({ onItemsRendered, ref }) => (
-              <Grid
-                height={height}
-                width={width}
-                columnCount={NUM_COLUMNS}
-                columnWidth={100}
-                rowCount={1000}
-                rowHeight={100}
-                onItemsRendered={(gridProps) => {
-                  onItemsRendered({
-                    overscanStartIndex:
-                      gridProps.overscanRowStartIndex * NUM_COLUMNS,
-                    overscanStopIndex:
-                      gridProps.overscanRowStopIndex * NUM_COLUMNS,
-                    visibleStartIndex:
-                      gridProps.visibleRowStartIndex * NUM_COLUMNS,
-                    visibleStopIndex:
-                      gridProps.visibleRowStopIndex * NUM_COLUMNS,
-                  });
-                }}
-                ref={ref}
-              >
-                {Cell}
-              </Grid>
-            )}
-          </InfiniteLoader>
-        )}
-      </AutoSizer>
-    </div>
+        return (
+          <Card
+            innerRef={data.items.length === index + 1 ? ref : null}
+            key={[i.appid, i.defid].join("")}
+            appid={i.appid}
+            type={i.type}
+            title={i.title}
+            price={i.price}
+            url={`${i.urls.baseUrl}/${i.appid}/${src}`}
+            isVideo={i.urls.isVideo}
+          />
+        );
+      })}
+      {data.status === "pending" && <Loader />}
+      {!data.hasMore && <p>No more items</p>}
+    </Wrapper>
   );
 }

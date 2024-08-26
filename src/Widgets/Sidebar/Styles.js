@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   z-index: 1;
   background-color: #171d25;
-  position: relative;
+  position: absolute;
   color: #fff;
   white-space: nowrap;
 
@@ -19,8 +19,25 @@ export const Wrapper = styled.div`
   height: 100%;
 
   &&.open {
-    width: 26%;
+    width: 50%;
     padding: 12px;
+  }
+`;
+
+export const Background = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #0000004d;
+  z-index: -1;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+
+  &&.open {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity 0.5s ease;
+    cursor: pointer;
   }
 `;
 

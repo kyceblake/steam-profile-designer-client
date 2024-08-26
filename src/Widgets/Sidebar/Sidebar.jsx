@@ -4,38 +4,20 @@ import ApplyResetButton from "../../Components/SidebarApplyResetBtn/SidebarApply
 import Entry from "../../Components/SidebarEntry/SidebarEntry";
 import SidebarToggleBtn from "../../Components/SidebarToggleBtn/SidebarToggleBtn";
 
-import { Wrapper, Bottom } from "./Styles";
+import { Wrapper, Bottom, Background } from "./Styles";
 import { BiRevision, BiSolidInjection } from "react-icons/bi";
 
-const categories = [
-  {
-    id: 0,
-    title: "All",
-  },
-  {
-    id: 1,
-    title: "Backgrounds",
-    submenus: [
-      { id: 10, title: "Animated" },
-      { id: 11, title: "Static" },
-    ],
-  },
-  { id: 2, title: "Frames" },
-  { id: 3, title: "Avatars" },
-  { id: 4, title: "Special profiles" },
-];
-
-/*
-  TODO:
-  - ApplyResetButton effects
-  - Move search bar in sidebar maybe?
-*/
-export default function Sidebar() {
+export default function Sidebar({ categories }) {
   const [isSidebarActive, toggleSidebar] = useState(true);
   const [activeCategoryId, setActiveCategoryId] = useState(0);
 
+  // TODO: don't forget to close sidebar when search input activates
   return (
     <>
+      <Background
+        className={`${isSidebarActive ? "open" : ""}`}
+        onClick={() => toggleSidebar((e) => !e)}
+      />
       <Wrapper className={`${isSidebarActive ? "open" : ""}`}>
         <ul>
           {categories.map((entry) => (

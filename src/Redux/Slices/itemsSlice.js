@@ -1,5 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const fetchURL = import.meta.env.VITE_ITEMS_FETCH_URL;
@@ -8,7 +7,8 @@ const initialState = {
   items: [],
   pages: 0,
   page: 0,
-  status: "idle",
+  hasMore: true,
+  status: "pending", // "pending", "fulfilled", "rejected"
   error: null,
 };
 
@@ -16,17 +16,21 @@ export const itemsSlice = createSlice({
   name: "items",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(fetchItems.pending, (state, action) => {
+    builder.addCase(fetchItems.pending, (state) => {
       state.status = "pending";
     });
 
     builder.addCase(fetchItems.fulfilled, (state, action) => {
+      const res = action.payload;
+      const meta = action.meta;
+
       return {
         ...state,
         status: "fulfilled",
-        items: state.items.concat(action.payload.page),
-        pages: action.payload.pages,
-        page: action.meta.arg.page,
+        items: state.items.concat(res.page),
+        pages: res.pages,
+        page: meta.arg.page,
+        hasMore: meta.arg.page !== res.pages,
       };
     });
 
@@ -40,10 +44,12 @@ export const itemsSlice = createSlice({
 export const fetchItems = createAsyncThunk(
   "items/fetchItems",
   async (params) => {
-    const { category, search, page } = params;
+    const { type, search, page } = params;
     const { data } = await axios.get(fetchURL, {
       params: {
-        page,
+        page: page,
+        type,
+        search,
       },
     });
     return JSON.parse(data);
