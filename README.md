@@ -15,3 +15,13 @@ This project requires [steam-profile-designer-server](https://github.com/kycebla
 - Manipulate steam profile DOM via browser extensions
 - Profile themes color parser
 - Minor UI/UX tweaks
+
+## Install & Usage
+
+Have yet to write
+
+# Building
+
+Have yet to write
+
+# License

@@ -1,8 +1,15 @@
-import Catalogue from "./Widgets/Catalogue/Catalogue";
+import { useDispatch } from "react-redux";
+import Catalogue from "./Widgets/CatalogueV2/CatalogueV2";
 import Header from "./Widgets/Header/Header";
 import Sidebar from "./Widgets/Sidebar/Sidebar";
 
 import "./theme.css";
+import {
+  fetchItems,
+  selectItems,
+  toggleActiveItem,
+} from "./Redux/Slices/itemsSlice";
+import { useSelector } from "react-redux";
 
 const categories = [
   {

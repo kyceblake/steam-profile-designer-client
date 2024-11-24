@@ -5,9 +5,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
-
-  width: 170px;
-  height: 240px;
+  width: 100%;
 
   cursor: pointer;
 

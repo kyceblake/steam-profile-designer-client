@@ -9,10 +9,21 @@ import {
   Price,
 } from "./style";
 
-function Card({ appid, type, title, price, url, isVideo, innerRef, style }) {
-  // TODO: parse postre for video
+function Card({
+  appid,
+  defid,
+  type,
+  title,
+  price,
+  url,
+  isVideo,
+  innerRef,
+  style,
+  onClick,
+}) {
+  // TODO: poster for video?
   return (
-    <Wrapper ref={innerRef} style={style}>
+    <Wrapper ref={innerRef} style={style} onClick={() => onClick(appid, defid)}>
       <Illustration>
         {isVideo ? (
           <video

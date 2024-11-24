@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 
 import Card from "../../Components/Card/Card";
 import { Loading, Wrapper } from "./style";
+import VirtualGrid from "../../Components/VirtualGrid/VirtualGrid";
 
 const Loader = () => <Loading>⏳ Loading...</Loading>;
 
@@ -29,7 +30,7 @@ export default function Catalogue({
 
   return (
     <Wrapper>
-      {items.map((i, index) => {
+      {/*items.map((i, index) => {
         const src = i.urls.small || i.urls.big; // sometimes only one exists (games fault)
         return (
           <Card
@@ -46,7 +47,22 @@ export default function Catalogue({
             style={{ width: "170px", height: "240px" }}
           />
         );
-      })}
+      })*/}
+      <VirtualGrid
+        numItems={items.length}
+        itemHeight={240}
+        windowHeight={448}
+        renderItem={({ index, style }) => {
+          const i = items[index];
+          console.log(items);
+          return (
+            <Card
+              key={[i.appid, i.defid].join("")}
+              style={{ width: "170px", height: "240px" }}
+            />
+          );
+        }}
+      />
       {status === "pending" && <Loader />}
       {!hasMore && <p>No more items</p>}
     </Wrapper>

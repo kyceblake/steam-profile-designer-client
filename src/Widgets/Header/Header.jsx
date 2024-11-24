@@ -10,7 +10,7 @@ function Header() {
   useEffect(() => {
     const debouncer = setTimeout(() => {
       setSearchValue(searchValue);
-    }, 500);
+    }, 10000);
     return () => clearTimeout(debouncer);
   }, [searchValue]);
 

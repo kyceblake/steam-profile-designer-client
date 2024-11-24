@@ -10,11 +10,17 @@ const initialState = {
   hasMore: true,
   status: "pending", // "pending", "fulfilled", "rejected"
   error: null,
+  activeItems: [], // only selected
 };
 
 export const itemsSlice = createSlice({
   name: "items",
   initialState,
+  reducers: {
+    toggleActiveItem: (state, action) => {
+      console.log(action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchItems.pending, (state) => {
       state.status = "pending";
@@ -24,10 +30,12 @@ export const itemsSlice = createSlice({
       const res = action.payload;
       const meta = action.meta;
 
+      if (!res.items) return state;
+
       return {
         ...state,
         status: "fulfilled",
-        items: state.items.concat(res.page),
+        items: state.items.concat(res.items),
         pages: res.pages,
         page: meta.arg.page,
         hasMore: meta.arg.page !== res.pages,
@@ -52,10 +60,12 @@ export const fetchItems = createAsyncThunk(
         search,
       },
     });
+
     return JSON.parse(data);
   }
 );
 
 export const selectItems = (state) => state.items;
 
+export const { toggleActiveItem } = itemsSlice.actions;
 export default itemsSlice.reducer;
